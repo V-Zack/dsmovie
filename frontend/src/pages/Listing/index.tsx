@@ -6,8 +6,7 @@ import { BASE_URL } from "utils/requests";
 import { MoviePage } from "types/movie";
 //import axios from "axios";
 
-function Listing(): JSX.Element {
-
+function Listing() {
 
     const [pageNumber, setPageNumber] = useState(0);
 
@@ -24,7 +23,7 @@ function Listing(): JSX.Element {
     });
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/movies?size=12&page=${pageNumber} &sort=title`)
+        axios.get(`${BASE_URL}/movies?size=12&page=${pageNumber}`)
             .then(response => {
                 const data = response.data as MoviePage;
                 setPage(data);
@@ -32,9 +31,13 @@ function Listing(): JSX.Element {
 
     }, [pageNumber]);
 
+    const handlePageChange = (newPageNumber : number) => { 
+        setPageNumber(newPageNumber);
+    }
+
     return (
         <>
-            <Pagination />
+            <Pagination page={page} onChange={handlePageChange} />
 
             <div className="container">
 
